@@ -1,0 +1,25 @@
+version: "3.7"
+
+services:
+  fhir:
+    image: docker.miracum.org/miracum-data/hapi-fhir-jpaserver:v8.1.2
+    ports:
+      - "8082:8080"
+    environment:
+      server.address: "http://host.docker.internal:8082/fhir"
+
+  loader:
+    image: curlimages/curl:7.71.1
+    command: -X POST
+      -H "Content-Type:application/fhir+json"
+      --retry-connrefuse
+      --connect-timeout 10
+      --max-time 60
+      --retry 5
+      --retry-delay 10
+      --data "@/studies.dev.json"
+      http://fhir:8080/fhir
+    depends_on:
+      - fhir
+    volumes:
+      - ./studies.dev.json:/studies.dev.json:ro

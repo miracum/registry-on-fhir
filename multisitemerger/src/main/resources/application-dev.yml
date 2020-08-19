@@ -1,0 +1,5 @@
+fhir:
+  url: "http://localhost:8082/fhir"
+
+webhook:
+  endpoint: "http://host.docker.internal:8080/updates"

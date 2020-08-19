@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multisitemerger
+  labels:
+    app.kubernetes.io/name: multisitemerger
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: multisitemerger
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: multisitemerger
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: multisitemerger
+          image: miracum/uc1-registry-multisitemerger:v1.4.10
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: "FHIR_URL"
+              value: "http://registry-fhir-server-hapi-fhir-server:8080/fhir"
+            - name: "WEBHOOK_ENDPOINT"
+              value: "http://multisitemerger:8080/updates"
+            - name: "MERGE_SCHEDULE"
+              value: "-" # "0 0 1 * * *"
+          securityContext:
+            allowPrivilegeEscalation: false
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: http
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            timeoutSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: http
+            failureThreshold: 5
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            timeoutSeconds: 10

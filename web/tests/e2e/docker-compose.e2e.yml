@@ -1,0 +1,41 @@
+version: "3.7"
+
+services:
+  web:
+    image: miracum/uc1-registry-web:${IMAGE_TAG}
+    environment:
+      - FHIR_URL=http://fhir:8080/fhir
+    depends_on:
+      - fhir
+
+  e2e:
+    image: cypress/included:3.8.3
+    working_dir: /e2e
+    depends_on:
+      - web
+    environment:
+      - CYPRESS_baseUrl=http://web:3000/
+      - CYPRESS_browser=chrome
+      - CYPRESS_screenshotsFolder=/results/screenshots
+      - CYPRESS_videosFolder=/results/videos
+    volumes:
+      - ${E2E_PATH}:/e2e
+
+  fhir:
+    image: docker.miracum.org/miracum-data/hapi-fhir-jpaserver:v6.5.1
+
+  loader:
+    image: byrnedo/alpine-curl:0.1.8
+    command: -X POST
+      -H "Content-Type:application/json"
+      --retry-connrefuse
+      --connect-timeout 10
+      --max-time 60
+      --retry 5
+      --retry-delay 10
+      --data "@/studies.fhirbundle.json"
+      http://fhir:8080/fhir
+    depends_on:
+      - fhir
+    volumes:
+      - ${E2E_PATH}/deploy/studies.fhirbundle.json:/studies.fhirbundle.json:ro

@@ -1,0 +1,6 @@
+resources:
+  - ../../base
+  - ingress.yaml
+patchesStrategicMerge:
+  - replicas-patch.yaml
+  - limits-patch.yaml

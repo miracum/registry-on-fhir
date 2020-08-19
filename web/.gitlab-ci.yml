@@ -1,0 +1,43 @@
+variables:
+  CONTAINER_REGISTRY_HOST: docker.io
+  CONTAINER_PROJECT_PATH: /miracum/uc1-registry-web
+
+include:
+  - project: "devops/ci-templates"
+    file: "/standard/.container-build.yml"
+
+.registry_login:
+  before_script:
+    - echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USERNAME $CONTAINER_REGISTRY_HOST --password-stdin
+  after_script:
+    - docker logout $CONTAINER_REGISTRY_HOST
+
+unit:
+  stage: test
+  extends: .job_defaults
+  variables:
+    DOCKER_BUILDKIT: 1
+    BUILDKIT_PROGRESS: plain
+  script:
+    - docker build -f tests/unit/Dockerfile .
+  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
+
+e2e:
+  image:
+    name: docker/compose:1.26.2
+    entrypoint: [""]
+  stage: test
+  extends: .job_defaults
+  script:
+    # ideally, we should instead allow for mounting the build directory directly.
+    - export E2E_PATH=/cache/uc1/registry/web/$CI_JOB_ID
+    - mkdir -p $E2E_PATH
+    - cp -r tests/ $E2E_PATH
+    - cp cypress.json $E2E_PATH
+    - cp -r deploy/ $E2E_PATH
+    - export IMAGE_TAG=$CI_COMMIT_SHORT_SHA
+    - docker-compose -p $CI_PROJECT_NAME-$CI_JOB_ID -f tests/e2e/docker-compose.e2e.yml run loader
+    - docker-compose -p $CI_PROJECT_NAME-$CI_JOB_ID -f tests/e2e/docker-compose.e2e.yml run e2e
+  after_script:
+    - docker-compose -p $CI_PROJECT_NAME-$CI_JOB_ID -f tests/e2e/docker-compose.e2e.yml down --remove-orphans
+    - rm -rf /cache/uc1/registry/web/$CI_JOB_ID
