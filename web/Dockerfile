@@ -14,10 +14,10 @@ ENV NODE_ENV=production
 COPY --from=build /app/server server
 COPY --from=build /app/node_modules node_modules
 COPY --from=build /app/dist dist
-# used for vulnerability scans
+# included for vulnerability scans
 COPY package*.json ./
 
-USER node
+USER 65532
 EXPOSE 3000
 HEALTHCHECK CMD wget --quiet --tries=1 --spider http://localhost:3000/health || exit 1
 ENTRYPOINT [ "npm" ]
