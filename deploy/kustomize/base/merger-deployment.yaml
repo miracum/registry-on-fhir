@@ -23,7 +23,7 @@ spec:
               containerPort: 8080
           env:
             - name: "FHIR_URL"
-              value: "http://registry-fhir-server-hapi-fhir-server:8080/fhir"
+              value: "http://hapi-fhir-server:8080/fhir"
             - name: "WEBHOOK_ENDPOINT"
               value: "http://multisitemerger:8080/updates"
             - name: "MERGE_SCHEDULE"

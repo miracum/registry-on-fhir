@@ -24,7 +24,7 @@ spec:
               containerPort: 3000
           env:
             - name: FHIR_URL
-              value: "http://registry-fhir-server-hapi-fhir-server:8080/fhir"
+              value: "http://hapi-fhir-server:8080/fhir"
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
