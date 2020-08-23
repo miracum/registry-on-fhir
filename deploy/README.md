@@ -11,11 +11,11 @@
    ```sh
    helm repo add miracum https://docker.miracum.org/chartrepo/charts
    helm repo update
-   helm install -f helm/values.yaml hapi-fhir-server miracum/hapi-fhir-server
+   helm install -n miracum-registry -f helm/fhir-server-values.yaml hapi-fhir-server miracum/hapi-fhir-server
    ```
 
 1. Deploy the multi-site study merger and the web app
 
    ```sh
-   kustomize build kustomize/overlays/prod/ | kubectl apply -f -
+   kustomize build kustomize/overlays/prod/ | kubectl apply -n miracum-registry -f -
    ```
