@@ -30,19 +30,3 @@ spec:
               value:  "0 0 1 * * *"
           securityContext:
             allowPrivilegeEscalation: false
-          readinessProbe:
-            httpGet:
-              path: /actuator/health/readiness
-              port: http
-            failureThreshold: 3
-            initialDelaySeconds: 30
-            periodSeconds: 15
-            timeoutSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /actuator/health/liveness
-              port: http
-            failureThreshold: 5
-            initialDelaySeconds: 30
-            periodSeconds: 15
-            timeoutSeconds: 10
