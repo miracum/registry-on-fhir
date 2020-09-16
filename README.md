@@ -1,4 +1,4 @@
-# registry-on-fhir
+# Registry on FHIR
 
 A clinical trial registry based on FHIR.
 

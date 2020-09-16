@@ -1,0 +1,56 @@
+workflow:
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+    - if: $CI_COMMIT_BRANCH == "master"
+
+variables:
+  CONTAINER_REGISTRY_HOST: docker.io
+
+include:
+  - project: "devops/ci-templates"
+    file: "/preflight/.tidy-files.yml"
+
+  - project: "devops/ci-templates"
+    file: "/linting/.yamllint.yml"
+  - project: "devops/ci-templates"
+    file: "/linting/.markdownlint.yml"
+  - project: "devops/ci-templates"
+    file: "/linting/.hadolint.yml"
+
+  - project: "devops/ci-templates"
+    file: "/versioning/.semantic-release-get-version.yml"
+
+  - project: "devops/ci-templates"
+    file: "/release/.gitlab-release.yml"
+
+stages:
+  - preflight
+  - lint
+  - version
+  - triggers
+  - release
+
+hadolint:
+  script:
+    - hadolint web/Dockerfile
+    - hadolint multisitemerger/Dockerfile
+
+web:
+  stage: triggers
+  needs: ["get next version"]
+  trigger:
+    include: web/.gitlab-ci.yml
+    strategy: depend
+  rules:
+    - changes:
+        - web/*
+
+multisitemerger:
+  stage: triggers
+  needs: ["get next version"]
+  trigger:
+    include: multisitemerger/.gitlab-ci.yml
+    strategy: depend
+  rules:
+    - changes:
+        - multisitemerger/*

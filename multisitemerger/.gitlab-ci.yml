@@ -1,10 +1,11 @@
-variables:
-  CONTAINER_REGISTRY_HOST: docker.io
-  CONTAINER_PROJECT_PATH: /miracum/uc1-registry-multisitemerger
+workflow:
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+    - if: $CI_COMMIT_BRANCH == "master"
 
-include:
-  - project: "devops/ci-templates"
-    file: "/standard/.container-build.yml"
+variables:
+  CONTAINER_PROJECT_PATH: "/miracum/uc1-registry-multisitemerger"
+  IMAGE_PATH: $CONTAINER_REGISTRY_HOST$CONTAINER_PROJECT_PATH
 
 .registry_login:
   before_script:
@@ -12,14 +13,47 @@ include:
   after_script:
     - docker logout $CONTAINER_REGISTRY_HOST
 
+include:
+  - project: "devops/ci-templates"
+    file: "/versioning/.semantic-release-get-version.yml"
+  - project: "devops/ci-templates"
+    file: "/image-scanning/.trivy-scan.yml"
+  - project: "devops/ci-templates"
+    file: "/release/.push-to-registry.yml"
+
+stages:
+  - version
+  - build
+  - test
+  - release
+
+container:
+  stage: build
+  extends: .registry_login
+  variables:
+    DOCKER_BUILDKIT: 1
+    BUILDKIT_PROGRESS: plain
+  script:
+    - cd multisitemerger/
+    - printenv
+    - export VERSION=$(cat .VERSION)
+    - docker build -t $IMAGE_PATH:$CI_COMMIT_SHORT_SHA
+      --build-arg VERSION=$VERSION
+      --build-arg GIT_REF=$CI_COMMIT_SHA
+      --build-arg BUILD_TIME="$(date -Is)" .
+    - docker push $IMAGE_PATH:$CI_COMMIT_SHORT_SHA
+
+trivy:
+  variables:
+    IMAGE_FQN: $CONTAINER_REGISTRY_HOST$CONTAINER_PROJECT_PATH:$CI_COMMIT_SHORT_SHA
+
 e2e:
-  extends:
-    - .job_defaults
   stage: test
   image:
     name: docker/compose:1.26.2
     entrypoint: [""]
   before_script:
+    - cd multisitemerger/
     - mkdir -p /cache/$CI_PROJECT_NAME
     - cp -r deploy/studies.dev.json /cache/$CI_PROJECT_NAME/
     - export IMAGE_TAG=$CI_COMMIT_SHORT_SHA
@@ -29,4 +63,5 @@ e2e:
     - docker-compose -p $CI_PROJECT_NAME-$CI_JOB_ID-e2e -f tests/e2e/docker-compose.yml run loader
     - docker-compose -p $CI_PROJECT_NAME-$CI_JOB_ID-e2e -f tests/e2e/docker-compose.yml run tester
   after_script:
+    - cd multisitemerger/
     - docker-compose -p $CI_PROJECT_NAME-$CI_JOB_ID-e2e -f tests/e2e/docker-compose.yml down --volumes --remove-orphans

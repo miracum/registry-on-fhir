@@ -27,6 +27,6 @@ spec:
             - name: "WEBHOOK_ENDPOINT"
               value: "http://multisitemerger:8080/updates"
             - name: "MERGE_SCHEDULE"
-              value:  "0 0 1 * * *"
+              value: "0 0 1 * * *"
           securityContext:
             allowPrivilegeEscalation: false
