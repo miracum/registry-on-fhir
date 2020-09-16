@@ -55,7 +55,7 @@ public class MultiSiteStudyFinder {
       for (var identifier : study.getIdentifier()) {
         if (!identifier.hasValue() || !identifier.hasSystem()) {
           log.warn(
-              "ResearchStudy/{} has identifier {} without value. Skipping.",
+              "{} has identifier {} without value. Skipping.",
               study.getId(),
               identifier.getSystem());
           continue;

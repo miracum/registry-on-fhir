@@ -8,10 +8,14 @@ import java.util.List;
 import org.hl7.fhir.r4.model.*;
 import org.hl7.fhir.r4.model.ResearchStudy.ResearchStudyStatus;
 import org.miracum.registry.multisitemerger.fhir.FhirSystems;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MultiSiteStudyMerger {
+  private static final Logger log = LoggerFactory.getLogger(MultiSiteStudyFinder.class);
+
   private static final String MISSING_ITEM_METRIC_NAME = "multisitemerger.study.item.missing.total";
   private static final HashMap<String, Counter> missingItemMetrics = new HashMap<>();
 
@@ -139,6 +143,14 @@ public class MultiSiteStudyMerger {
       // put all identifiers in the hashmap in order to only end up with distinct identifiers in the
       // end
       for (var identifier : study.getIdentifier()) {
+        if (!identifier.hasValue() || !identifier.hasSystem()) {
+          log.warn(
+              "{} has identifier {} without value. Skipping.",
+              study.getId(),
+              identifier.getSystem());
+          continue;
+        }
+
         var id =
             String.format(
                 "%s|%s",
