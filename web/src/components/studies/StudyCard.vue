@@ -39,7 +39,7 @@
               <li
                 v-for="(condition, index) in study.condition"
                 :key="index"
-              >{{ condition.text || condition.coding[0].display }}</li>
+              >{{ condition.text || condition.coding[0].display || condition.coding[0].code }}</li>
             </ul>
           </template>
 
