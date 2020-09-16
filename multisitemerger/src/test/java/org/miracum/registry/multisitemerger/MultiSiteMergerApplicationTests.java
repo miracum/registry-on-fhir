@@ -1,5 +1,9 @@
 package org.miracum.registry.multisitemerger;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import ca.uhn.fhir.rest.gclient.ICriterion;
 import ca.uhn.fhir.rest.gclient.IUpdateWithQueryTyped;
@@ -14,43 +18,40 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.retry.policy.NeverRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
 class MultiSiteMergerApplicationTests {
 
-    //@Test - disabled as mocking IGenericClient doesn't seem to work
-    void contextLoads() {
+  // @Test - disabled as mocking IGenericClient doesn't seem to work
+  void contextLoads() {}
+
+  @TestConfiguration
+  static class TestConfig {
+
+    @Bean
+    @Primary
+    public RetryTemplate neverRetryTemplate() {
+      var template = new RetryTemplate();
+      template.setRetryPolicy(new NeverRetryPolicy());
+      return template;
     }
 
-    @TestConfiguration
-    static class TestConfig {
+    @Bean
+    @Primary
+    public IGenericClient mockFhirClient() {
+      var client = mock(IGenericClient.class, new ReturnsDeepStubs());
 
-        @Bean
-        @Primary
-        public RetryTemplate neverRetryTemplate() {
-            var template = new RetryTemplate();
-            template.setRetryPolicy(new NeverRetryPolicy());
-            return template;
-        }
+      Object when =
+          client
+              .update()
+              .resource(any(IBaseResource.class))
+              .conditional()
+              .where((ICriterion<?>) any())
+              .execute();
 
-        @Bean
-        @Primary
-        public IGenericClient mockFhirClient() {
-            var client = mock(IGenericClient.class, new ReturnsDeepStubs());
+      when(when).thenReturn(mock(IUpdateWithQueryTyped.class));
 
-            Object when = client.update()
-                    .resource(any(IBaseResource.class))
-                    .conditional()
-                    .where((ICriterion<?>) any())
-                    .execute();
-
-            when(when).thenReturn(mock(IUpdateWithQueryTyped.class));
-
-            return client;
-        }
+      return client;
     }
+  }
 }

@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class MultiSiteMergerApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(MultiSiteMergerApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(MultiSiteMergerApplication.class, args);
+  }
 }

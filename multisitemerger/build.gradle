@@ -4,6 +4,7 @@ plugins {
     id "java"
     id "checkstyle"
     id "jacoco"
+    id "com.diffplug.spotless" version "5.5.1"
 }
 
 group = "org.miracum.registry"
@@ -64,4 +65,12 @@ jacocoTestReport {
 
 bootJar {
     layered()
+}
+
+spotless {
+    java {
+        importOrder()
+        removeUnusedImports()
+        googleJavaFormat()
+    }
 }
