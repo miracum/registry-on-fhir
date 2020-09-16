@@ -20,7 +20,8 @@ postgresql:
   enabled: true
   postgresqlUsername: fhir
   postgresqlDatabase: fhir
-  postgresqlPassword: null # uses a random alphanumeric password
+  # uses a random alphanumeric password
+  postgresqlPassword: null
   persistence:
     size: 64Gi
   replication:

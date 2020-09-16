@@ -1,5 +1,7 @@
-FROM node:14.8-alpine as build
+FROM node:14.10-alpine AS base
 WORKDIR /app
+
+FROM base AS build
 COPY package*.json ./
 RUN npm ci --no-optional
 COPY . ./
@@ -8,8 +10,7 @@ ENV VUE_APP_VERSION=${VERSION}
 RUN npm run build && \
     npm prune --no-optional --production
 
-FROM node:14.8-alpine
-WORKDIR /app
+FROM base
 ENV NODE_ENV=production
 COPY --from=build /app/server server
 COPY --from=build /app/node_modules node_modules

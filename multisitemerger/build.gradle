@@ -73,7 +73,6 @@ spotless {
         removeUnusedImports()
         googleJavaFormat()
     }
-    lineEndings = "WINDOWS"
 }
 
 checkstyle {
