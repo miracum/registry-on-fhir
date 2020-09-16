@@ -76,3 +76,6 @@ e2e:
     - cd web/
     - docker-compose -p $CI_PROJECT_NAME-$CI_JOB_ID -f tests/e2e/docker-compose.e2e.yml down --remove-orphans
     - rm -rf /cache/uc1/registry/web/$CI_JOB_ID
+
+push to registry:
+  extends: .registry_login
