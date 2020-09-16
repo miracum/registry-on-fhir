@@ -73,4 +73,10 @@ spotless {
         removeUnusedImports()
         googleJavaFormat()
     }
+    lineEndings = "WINDOWS"
+}
+
+checkstyle {
+    toolVersion "8.29"
+    configFile = file(".checkstyle/checkstyle.xml")
 }
