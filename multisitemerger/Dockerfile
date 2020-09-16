@@ -13,8 +13,7 @@ COPY --from=build /home/gradle/src/spring-boot-loader/ ./
 COPY --from=build /home/gradle/src/snapshot-dependencies/ ./
 COPY --from=build /home/gradle/src/application/ .
 
-COPY --from=build /home/gradle/src/build/libs/*.jar ./multisitemerger.jar
-USER nonroot
+USER 65532
 ARG VERSION=0.0.0
 ENV APP_VERSION=${VERSION} \
     SPRING_PROFILES_ACTIVE=prod
