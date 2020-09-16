@@ -34,9 +34,8 @@ container:
     DOCKER_BUILDKIT: 1
     BUILDKIT_PROGRESS: plain
   script:
-    - cd multisitemerger/
-    - printenv
     - export VERSION=$(cat .VERSION)
+    - cd multisitemerger/
     - docker build -t $IMAGE_PATH:$CI_COMMIT_SHORT_SHA
       --build-arg VERSION=$VERSION
       --build-arg GIT_REF=$CI_COMMIT_SHA
