@@ -1,7 +1,6 @@
 commonLabels:
   app.kubernetes.io/part-of: trials-registry
   app.kubernetes.io/managed-by: kustomize
-  app.k8s.diz.uk-erlangen.de/owner: guldencn
 resources:
   - web-deployment.yaml
   - web-service.yaml

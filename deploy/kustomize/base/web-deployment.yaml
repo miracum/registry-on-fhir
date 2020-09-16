@@ -17,7 +17,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: web
-          image: docker.io/miracum/uc1-registry-web:v1.12.8
+          image: docker.io/miracum/uc1-registry-web:2.0.0
           imagePullPolicy: Always
           ports:
             - name: http
