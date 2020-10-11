@@ -3,16 +3,21 @@
     <div class="card-content">
       <div class="columns study-card-header">
         <div class="column">
-          <p class="title is-size-4 is-size-5-mobile">{{studyAcronym || studyTitle}}</p>
+          <p class="title is-size-4 is-size-5-mobile">
+            {{ studyAcronym || studyTitle }}
+          </p>
         </div>
-        <div class="column is-2 has-text-right has-text-left-mobile has-text-weight-semibold">
+        <div
+          class="column is-2 has-text-right has-text-left-mobile has-text-weight-semibold"
+        >
           <b-tag
             class="recruitment-status"
             :type="getTagTypeFromRecruitmentStatus(study.status)"
-          >{{ statusText }}</b-tag>
+            >{{ statusText }}</b-tag
+          >
         </div>
       </div>
-      <p class="study-title">{{studyTitle}}</p>
+      <p class="study-title">{{ studyTitle }}</p>
     </div>
     <b-collapse :open="false" :aria-id="study.id" class="has-text-centered">
       <b-button
@@ -30,23 +35,28 @@
         <div class="content">
           <template v-if="studyDescription">
             <h3 class="is-size-5">Beschreibung</h3>
-            <p>{{studyDescription}}</p>
+            <p>{{ studyDescription }}</p>
           </template>
 
           <template v-if="study.condition">
             <h3 class="is-size-5">Studieninhalt</h3>
             <ul>
-              <li
-                v-for="(condition, index) in study.condition"
-                :key="index"
-              >{{ condition.text || condition.coding[0].display || condition.coding[0].code }}</li>
+              <li v-for="(condition, index) in study.condition" :key="index">
+                {{
+                  condition.text ||
+                  condition.coding[0].display ||
+                  condition.coding[0].code
+                }}
+              </li>
             </ul>
           </template>
 
           <template v-if="study.keyword">
             <h3 class="is-size-5">Kategorien</h3>
             <ul>
-              <li v-for="(keyword, index) in keywords" :key="index">{{ keyword }}</li>
+              <li v-for="(keyword, index) in keywords" :key="index">
+                {{ keyword }}
+              </li>
             </ul>
           </template>
 
@@ -58,30 +68,37 @@
               :key="'chunk-' + index"
               class="columns is-desktop"
             >
-              <div v-for="(site, index) in contactChunk" :key="index" class="column">
-                <strong>{{site.name}}</strong>
+              <div
+                v-for="(site, index) in contactChunk"
+                :key="index"
+                class="column"
+              >
+                <strong>{{ site.name }}</strong>
                 <br />
                 <b-tag
                   class="has-text-weight-semibold"
                   :type="getTagTypeFromRecruitmentStatus(site.status)"
-                >{{ site.statusText }}</b-tag>
+                  >{{ site.statusText }}</b-tag
+                >
                 <br />
                 <template v-if="site.contact">
-                  {{site.contact.name}}
+                  {{ site.contact.name }}
                   <ul class="list-unstyled">
-                    <li v-for="(telecom, comIndex) in site.contact.telecom" :key="comIndex">
+                    <li
+                      v-for="(telecom, comIndex) in site.contact.telecom"
+                      :key="comIndex"
+                    >
                       <a
                         v-if="telecom.system == 'email'"
                         :href="`mailto:${telecom.value}?subject=Anfrage%20bezüglich%20${studyAcronym}%20Studie`"
                       >
-                        {{
-                        telecom.value
-                        }}
+                        {{ telecom.value }}
                       </a>
-                      <a v-else-if="telecom.system == 'phone'" :href="`tel:${telecom.value}`">
-                        {{
-                        telecom.value
-                        }}
+                      <a
+                        v-else-if="telecom.system == 'phone'"
+                        :href="`tel:${telecom.value}`"
+                      >
+                        {{ telecom.value }}
                       </a>
                     </li>
                   </ul>
@@ -93,11 +110,13 @@
           <template v-if="study.relatedArtifact">
             <h3 class="is-size-5">Weiterführende Links</h3>
             <ul class="list-unstyled">
-              <li v-for="(artifact, index) in study.relatedArtifact" :key="index">
-                <a
-                  v-if="artifact.url"
-                  :href="artifact.url"
-                >{{ artifact.display || artifact.label || artifact.url }}</a>
+              <li
+                v-for="(artifact, index) in study.relatedArtifact"
+                :key="index"
+              >
+                <a v-if="artifact.url" :href="artifact.url">{{
+                  artifact.display || artifact.label || artifact.url
+                }}</a>
                 <p v-else>{{ artifact.display || artifact.label }}</p>
               </li>
             </ul>
@@ -115,13 +134,18 @@ import { sites } from "@/store";
 
 const statusLookup = {
   active: "Rekrutierung läuft",
-  completed: "Studie abgeschlossen",
-  default: "unbekannter Rekrutierungsstatus",
+  "administratively-completed": "Studie beendet",
+  approved: "Studie ist genehmigt",
   "closed-to-accrual": "Rekrutierung beendet",
   "closed-to-accrual-and-intervention": "Rekrutierung beendet",
+  completed: "Studie abgeschlossen",
+  disapproved: "Studie wurde abgelehnt",
+  "in-review": "Studie wird momentan bewertet",
   "temporarily-closed-to-accrual": "Rekrutierung temporär ausgesetzt",
   "temporarily-closed-to-accrual-and-intervention":
     "Rekrutierung temporär ausgesetzt",
+  withdrawn: "Studie wurde zurückgezogen",
+  default: "unbekannter Rekrutierungsstatus",
 };
 
 export default {
