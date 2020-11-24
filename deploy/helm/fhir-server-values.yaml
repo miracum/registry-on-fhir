@@ -29,3 +29,7 @@ postgresql:
     slaveReplicas: 2
     synchronousCommit: "on"
     numSynchronousReplicas: 1
+
+extraEnv:
+  - name: validation.requests.enabled
+    value: "false"
