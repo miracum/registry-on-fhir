@@ -1,4 +1,4 @@
-FROM node:14.13-alpine AS base
+FROM node:14.15-alpine AS base
 WORKDIR /app
 
 FROM base AS build
@@ -7,14 +7,19 @@ RUN npm ci --no-optional
 COPY . ./
 ARG VERSION=0.0.0
 ENV VUE_APP_VERSION=${VERSION}
-RUN npm run build && \
-    npm prune --no-optional --production
+RUN npm run build
+
+FROM build AS test
+RUN npm run test:unit
+
+FROM build AS pruned
+RUN npm prune --production
 
 FROM base
 ENV NODE_ENV=production
-COPY --from=build /app/server server
-COPY --from=build /app/node_modules node_modules
-COPY --from=build /app/dist dist
+COPY --from=pruned /app/server server
+COPY --from=pruned /app/node_modules node_modules
+COPY --from=pruned /app/dist dist
 # included for vulnerability scans
 COPY package*.json ./
 

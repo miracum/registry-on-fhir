@@ -58,9 +58,7 @@ export default {
   },
   methods: {
     getFilteredTags(text) {
-      this.filteredTags = this.categories.filter((option) => {
-        return option.text.toLowerCase().indexOf(text.toLowerCase()) >= 0;
-      });
+      this.filteredTags = this.categories.filter((option) => option.text.toLowerCase().indexOf(text.toLowerCase()) >= 0);
     },
     onTagChanged() {
       filters.categories = this.selectedCategories.map((t) => t.code);
