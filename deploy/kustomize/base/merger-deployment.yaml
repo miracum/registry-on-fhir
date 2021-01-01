@@ -16,7 +16,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: multisitemerger
-          image: miracum/uc1-registry-multisitemerger:2.0.0
+          image: miracum/uc1-registry-multisitemerger:2.1.4
           imagePullPolicy: Always
           ports:
             - name: http
