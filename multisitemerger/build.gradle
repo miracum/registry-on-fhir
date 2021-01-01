@@ -1,10 +1,11 @@
 plugins {
-    id "org.springframework.boot" version "2.3.2.RELEASE"
-    id "io.spring.dependency-management" version "1.0.9.RELEASE"
+    id "org.springframework.boot" version "2.4.1"
+    id "io.spring.dependency-management" version "1.0.10.RELEASE"
     id "java"
-    id "checkstyle"
     id "jacoco"
-    id "com.diffplug.spotless" version "5.5.1"
+    id "checkstyle"
+    id "com.diffplug.spotless" version "5.8.2"
+
 }
 
 group = "org.miracum.registry"
@@ -29,18 +30,18 @@ dependencies {
     implementation "org.springframework.retry:spring-retry:1.3.0"
     implementation "org.jgrapht:jgrapht-core:1.5.0"
     implementation "org.jgrapht:jgrapht-io:1.5.0"
-    implementation "ca.uhn.hapi.fhir:hapi-fhir-base:5.0.2"
-    implementation "ca.uhn.hapi.fhir:hapi-fhir-client:5.0.2"
-    implementation "ca.uhn.hapi.fhir:hapi-fhir-structures-r4:5.0.2"
+    implementation "ca.uhn.hapi.fhir:hapi-fhir-base:5.2.0"
+    implementation "ca.uhn.hapi.fhir:hapi-fhir-client:5.2.0"
+    implementation "ca.uhn.hapi.fhir:hapi-fhir-structures-r4:5.2.0"
 
-    implementation "io.micrometer:micrometer-registry-prometheus:1.5.3"
-    implementation "io.micrometer:micrometer-core:1.5.3"
+    implementation "io.micrometer:micrometer-registry-prometheus:1.6.2"
+    implementation "io.micrometer:micrometer-core:1.6.2"
 
     developmentOnly "org.springframework.boot:spring-boot-devtools"
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude group: "org.junit.vintage", module: "junit-vintage-engine"
     }
-    testImplementation "org.junit.jupiter:junit-jupiter-params:5.6.2"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:5.7.0"
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
@@ -63,10 +64,6 @@ jacocoTestReport {
     }
 }
 
-bootJar {
-    layered()
-}
-
 spotless {
     java {
         importOrder()
@@ -76,6 +73,6 @@ spotless {
 }
 
 checkstyle {
-    toolVersion "8.29"
+    toolVersion "8.39"
     configFile = file(".checkstyle/checkstyle.xml")
 }

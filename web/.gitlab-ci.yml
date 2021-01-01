@@ -15,19 +15,16 @@ variables:
 
 include:
   - project: "devops/ci-templates"
-    file: "/versioning/.semantic-release-get-version.yml"
-  - project: "devops/ci-templates"
     file: "/image-scanning/.trivy-scan.yml"
   - project: "devops/ci-templates"
     file: "/release/.push-to-registry.yml"
 
 stages:
-  - version
   - build
   - test
   - release
 
-container:
+build image:
   stage: build
   extends: .registry_login
   variables:
@@ -49,7 +46,7 @@ unit:
     BUILDKIT_PROGRESS: plain
   script:
     - cd web/
-    - docker build -f tests/unit/Dockerfile .
+    - docker build --target=test .
   coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
 
 trivy:

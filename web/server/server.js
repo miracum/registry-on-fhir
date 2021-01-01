@@ -64,9 +64,7 @@ app.use("/live", health.LivenessEndpoint(healthcheck));
 app.use("/ready", health.ReadinessEndpoint(healthcheck));
 app.use("/health", health.HealthEndpoint(healthcheck));
 
-const proxyRequestFilter = (_pathname, req) => {
-  return req.method === "GET";
-};
+const proxyRequestFilter = (_pathname, req) => req.method === "GET";
 
 app.use(
   "^/fhir",
