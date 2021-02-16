@@ -16,14 +16,14 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: multisitemerger
-          image: miracum/uc1-registry-multisitemerger:2.1.4
+          image: docker.io/miracum/uc1-registry-multisitemerger:2.1.4
           imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 8080
           env:
             - name: "FHIR_URL"
-              value: "http://hapi-fhir-server:8080/fhir"
+              value: "http://fhir-server-hapi-fhir-jpaserver:8080/fhir"
             - name: "WEBHOOK_ENDPOINT"
               value: "http://multisitemerger:8080/updates"
             - name: "MERGE_SCHEDULE"

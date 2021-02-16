@@ -37,7 +37,7 @@ function createFhirClient() {
   return FHIR.client({ serverUrl: fhirUrl });
 }
 
-const masterTag = `${Constants.SYSTEM_REGISTRY_STUDY_ROLE}|master`;
+const masterTag = `${Constants.SYSTEM_REGISTRY_STUDY_ROLE}%7Cmaster`;
 
 export const actions = {
   async fetchStudies() {
