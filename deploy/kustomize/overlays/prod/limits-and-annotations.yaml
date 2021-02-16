@@ -2,8 +2,15 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: web
+  annotations:
+    app.gitlab.com/app: miracum-uc1-registry-registry-on-fhir
+    app.gitlab.com/env: production
 spec:
   template:
+    metadata:
+      annotations:
+        app.gitlab.com/app: miracum-uc1-registry-registry-on-fhir
+        app.gitlab.com/env: production
     spec:
       containers:
         - name: web
@@ -19,8 +26,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: multisitemerger
+  annotations:
+    app.gitlab.com/app: miracum-uc1-registry-registry-on-fhir
+    app.gitlab.com/env: production
 spec:
+  replicas: 1
   template:
+    metadata:
+      annotations:
+        app.gitlab.com/app: miracum-uc1-registry-registry-on-fhir
+        app.gitlab.com/env: production
     spec:
       containers:
         - name: multisitemerger

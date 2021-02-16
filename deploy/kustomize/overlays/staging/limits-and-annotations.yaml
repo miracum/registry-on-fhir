@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  annotations:
+    app.gitlab.com/app: miracum-uc1-registry-registry-on-fhir
+    app.gitlab.com/env: staging
+spec:
+  template:
+    metadata:
+      annotations:
+        app.gitlab.com/app: miracum-uc1-registry-registry-on-fhir
+        app.gitlab.com/env: staging
+    spec:
+      containers:
+        - name: web
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multisitemerger
+  annotations:
+    app.gitlab.com/app: miracum-uc1-registry-registry-on-fhir
+    app.gitlab.com/env: staging
+spec:
+  replicas: 0
+  template:
+    metadata:
+      annotations:
+        app.gitlab.com/app: miracum-uc1-registry-registry-on-fhir
+        app.gitlab.com/env: staging
+    spec:
+      containers:
+        - name: multisitemerger
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+            limits:
+              memory: 1024Mi
+              cpu: 250m
