@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import org.hl7.fhir.r4.model.ResearchStudy;
+import org.hl7.fhir.r4.model.ResearchStudy.ResearchStudyStatus;
 import org.hl7.fhir.r4.model.Subscription;
 import org.miracum.registry.multisitemerger.MultiSiteStudyFinder;
 import org.miracum.registry.multisitemerger.MultiSiteStudyMerger;
@@ -28,7 +29,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.retry.RetryCallback;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(
@@ -132,6 +138,7 @@ public class MergeUpdateController {
           var masterStudies =
               multiSiteStudies.stream()
                   .map(studyCluster -> merger.mergeToMasterStudy(new ArrayList<>(studyCluster)))
+                  .filter(study -> study.getStatus() == ResearchStudyStatus.ACTIVE)
                   .collect(toList());
 
           var transaction = trxBuilder.buildTransaction(masterStudies);

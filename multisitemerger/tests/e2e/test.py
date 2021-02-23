@@ -40,4 +40,4 @@ def smart():
 def test_creates_expected_number_of_research_studys(smart):
     search = r.ResearchStudy.where(struct={})
     rs = search.perform_resources(smart.server)
-    assert len(rs) == 5
+    assert len(rs) == 4
