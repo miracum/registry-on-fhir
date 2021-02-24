@@ -19,7 +19,7 @@
     "debug": "4.3.1",
     "express": "4.17.1",
     "express-bearer-token": "2.4.0",
-    "express-prom-bundle": "6.3.3",
+    "express-prom-bundle": "6.3.4",
     "fhirclient": "2.3.11",
     "fhirpath": "2.7.3",
     "fuse.js": "6.4.6",
