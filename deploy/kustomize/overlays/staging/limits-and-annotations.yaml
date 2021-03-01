@@ -30,7 +30,7 @@ metadata:
     app.gitlab.com/app: miracum-uc1-registry-registry-on-fhir
     app.gitlab.com/env: staging
 spec:
-  replicas: 0
+  replicas: 1
   template:
     metadata:
       annotations:
