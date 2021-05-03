@@ -9,7 +9,7 @@ services:
       server.address: "http://host.docker.internal:8082/fhir"
 
   loader:
-    image: curlimages/curl:7.75.0
+    image: curlimages/curl:7.76.1
     command: -X POST
       -H "Content-Type:application/fhir+json"
       --retry-connrefuse
