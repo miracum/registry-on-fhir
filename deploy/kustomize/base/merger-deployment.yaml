@@ -16,7 +16,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: multisitemerger
-          image: docker.io/miracum/uc1-registry-multisitemerger:2.1.4
+          image: docker.io/miracum/uc1-registry-multisitemerger:2.1.9
           imagePullPolicy: Always
           ports:
             - name: http
