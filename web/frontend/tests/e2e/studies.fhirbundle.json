@@ -1,0 +1,1228 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "fullUrl": "1",
+      "resource": {
+        "resourceType": "Location",
+        "name": "Universitätsklinikum Erlangen",
+        "address": {
+          "use": "work",
+          "line": ["Maximiliansplatz 2"],
+          "city": "Erlangen",
+          "state": "Bayern",
+          "postalCode": "91054",
+          "country": "DE"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Location",
+        "ifNoneExist": "name=Universit%C3%A4tsklinikum%20Erlangen"
+      }
+    },
+    {
+      "fullUrl": "2",
+      "resource": {
+        "resourceType": "Location",
+        "name": "Universitätsklinikum Carl Gustav Carus Dresden",
+        "address": {
+          "use": "work",
+          "line": ["Fetscherstraße 74"],
+          "city": "Dresden",
+          "state": "Sachsen",
+          "postalCode": "01307",
+          "country": "DE"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Location",
+        "ifNoneExist": "name=Universit%C3%A4tsklinikum%20Carl%20Gustav%20Carus%20Dresden"
+      }
+    },
+    {
+      "fullUrl": "3",
+      "resource": {
+        "resourceType": "Location",
+        "name": "Universitätsmedizin Greifswald",
+        "address": {
+          "use": "work",
+          "line": ["Fleischmannstraße 8"],
+          "city": "Greifswald",
+          "state": "Mecklenburg-Vorpommern",
+          "postalCode": "17475",
+          "country": "DE"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Location",
+        "ifNoneExist": "name=Universit%C3%A4tsmedizin%20Greifswald"
+      }
+    },
+    {
+      "fullUrl": "4",
+      "resource": {
+        "resourceType": "ResearchStudy",
+        "language": "de-DE",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://fhir.miracum.org/uc1/CodeSystem/registryStudyRole",
+              "code": "master"
+            }
+          ]
+        },
+        "contained": [
+          {
+            "resourceType": "Group",
+            "id": "1",
+            "type": "person",
+            "actual": false,
+            "characteristic": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+                      "code": "age"
+                    }
+                  ],
+                  "text": "Age Range"
+                },
+                "valueRange": {
+                  "low": {
+                    "value": 18,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "a"
+                  },
+                  "high": {
+                    "value": 99,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "a"
+                  }
+                },
+                "exclude": false
+              }
+            ]
+          }
+        ],
+        "identifier": [
+          {
+            "use": "secondary",
+            "system": "https://fhir.uk-erlangen.de/NamingSystem/identifier/ResearchStudyId",
+            "value": "xmdpldbelavr"
+          },
+          {
+            "use": "official",
+            "system": "http://clinicaltrials.gov",
+            "value": "NCT03521531"
+          }
+        ],
+        "extension": [
+          {
+            "url": "https://fhir.miracum.org/uc1/StructureDefinition/StudyAcronym",
+            "valueString": "PROSa"
+          }
+        ],
+        "title": "Krankheitslast und Versorgungssituation bei Sarkomen: Eine nationale Studie zu Einflussfaktoren patientenberichteter Krankheitsfolgen bei Menschen mit Sarkomerkrankungen - PROSa - A",
+        "_title": {
+          "extension": [
+            {
+              "extension": [
+                {
+                  "url": "lang",
+                  "valueString": "en"
+                },
+                {
+                  "url": "content",
+                  "valueString": "Burden and Medical Care of Sarcoma in Germany: Nationwide Cohort Study Focusing on Modifiable Determinants of Patient-Reported Outcome Measures in Sarcoma Patients"
+                }
+              ],
+              "url": "http://hl7.org/fhir/StructureDefinition/translation"
+            }
+          ]
+        },
+        "status": "active",
+        "condition": [
+          {
+            "coding": [
+              {
+                "system": "http://fhir.de/CodeSystem/dimdi/icd-10-gm",
+                "code": "C40 - C41"
+              }
+            ],
+            "text": "Bösartige Neubildungen des Knochens und des Gelenkknorpels"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://fhir.de/CodeSystem/dimdi/icd-10-gm",
+                "code": "C49"
+              }
+            ],
+            "text": "Bösartige Neubildung sonstigen Bindegewebes und anderer Weichteilgewebe"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://fhir.de/CodeSystem/dimdi/icd-10-gm",
+                "code": "C48"
+              }
+            ],
+            "text": "Bösartige Neubildung des Retroperitoneums und des Peritoneums"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://fhir.de/CodeSystem/dimdi/icd-10-gm",
+                "code": "C22"
+              }
+            ],
+            "text": "Bösartige Neubildung der Leber und der intrahepatischen Gallengänge"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://fhir.de/CodeSystem/dimdi/icd-10-gm",
+                "code": "C46"
+              }
+            ],
+            "text": "Kaposi-Sarkom [Sarcoma idiopathicum multiplex haemorrhagicum]"
+          }
+        ],
+        "relatedArtifact": [
+          {
+            "type": "documentation",
+            "display": "clinicaltrials.gov (NCT)",
+            "url": "https://clinicaltrials.gov/ct2/show/NCT03521531"
+          }
+        ],
+        "keyword": [
+          {
+            "coding": [
+              {
+                "system": "http://studien.uk-erlangen.de/fhir/CodeSystem/study-category",
+                "code": "entsarkom"
+              }
+            ],
+            "text": "Sarkome (Knochen- und Weichteilkrebs)"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://studien.uk-erlangen.de/fhir/CodeSystem/study-category",
+                "code": "sarkknoch"
+              }
+            ],
+            "text": "Tumore des Knochens (Knochensarkome)"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://studien.uk-erlangen.de/fhir/CodeSystem/study-category",
+                "code": "sarkweich"
+              }
+            ],
+            "text": "Weichteiltumor (Weichteilsarkome)"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://studien.uk-erlangen.de/fhir/CodeSystem/study-category",
+                "code": "sarksonst"
+              }
+            ],
+            "text": "Sonstige Sarkome"
+          }
+        ],
+        "description": "Hintergrund: Sarkome sind mit ca. 5.000 neu betroffenen Erwachsenen in Deutschland pro Jahr eine sehr seltene Erkrankung. Unterschieden werden zwei Gruppen, die häufigeren Weichteilsarkome und die Knochensarkome. Aufgrund ihrer Seltenheit, Verschiedenheit und der komplexen Therapien, die zur Behandlung nötig sind, stellen Sarkome die klinische Behandlungspraxis und die wissenschaftliche Forschung vor anhaltende Herausforderungen.  Studienziel: Hauptziele der Studie sind, die Behandlungssituation von Sarkompatienten zu erfassen und deren Einfluss auf die Lebensqualität der Patienten zu bestimmen. Es sollen beeinträchtigte Lebensqualitätsbereiche und die damit zusammenhängenden Faktoren identifiziert werden.  Nutzen der Ergebnisse: Wenn bekannt ist, in welchen Bereichen die Lebensqualität beeinträchtigt ist und welche klinischen Einflussgrößen damit in Zusammenhang stehen, kann eine bedarfsgerechte und zielgruppenspezifische Behandlung von Sarkompatienten besser gewährleistet werden.",
+        "enrollment": [
+          {
+            "reference": "#1"
+          }
+        ],
+        "site": [
+          {
+            "reference": "Location/1",
+            "extension": [
+              {
+                "url": "http://miracum.org/fhir/StructureDefinition/RecruitmentStatus",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "system": "http://hl7.org/fhir/research-study-status",
+                      "code": "active"
+                    }
+                  ]
+                }
+              },
+              {
+                "url": "http://miracum.org/fhir/StructureDefinition/ContactExtension",
+                "valueContactDetail": {
+                  "name": "Studienzentrale Chirurgie",
+                  "telecom": [
+                    {
+                      "system": "email",
+                      "value": "chir@example.de",
+                      "use": "work"
+                    },
+                    {
+                      "system": "phone",
+                      "value": "00000/11-11111",
+                      "use": "work"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "reference": "Location/2",
+            "extension": [
+              {
+                "url": "http://miracum.org/fhir/StructureDefinition/RecruitmentStatus",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "system": "http://hl7.org/fhir/research-study-status",
+                      "code": "closed-to-accrual"
+                    }
+                  ]
+                }
+              },
+              {
+                "url": "http://miracum.org/fhir/StructureDefinition/ContactExtension",
+                "valueContactDetail": {
+                  "name": "Abteilung Chirurgische Forschung",
+                  "telecom": [
+                    {
+                      "system": "email",
+                      "value": "chir-dresden@example.de",
+                      "use": "work"
+                    },
+                    {
+                      "system": "phone",
+                      "value": "+49(0)111 111 111",
+                      "use": "work"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "ResearchStudy?identifier=https%3A%2F%2Ffhir.uk-erlangen.de%2FNamingSystem%2Fidentifier%2FResearchStudyId|xmdpldbelavr"
+      }
+    },
+    {
+      "fullUrl": "5",
+      "resource": {
+        "resourceType": "ResearchStudy",
+        "language": "de-DE",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://fhir.miracum.org/uc1/CodeSystem/registryStudyRole",
+              "code": "master"
+            }
+          ]
+        },
+        "contained": [
+          {
+            "resourceType": "Group",
+            "id": "1",
+            "type": "person",
+            "actual": false,
+            "characteristic": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+                      "code": "age"
+                    }
+                  ],
+                  "text": "Age Range"
+                },
+                "valueRange": {
+                  "low": {
+                    "value": 18,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "a"
+                  }
+                },
+                "exclude": false
+              }
+            ]
+          }
+        ],
+        "identifier": [
+          {
+            "use": "secondary",
+            "system": "https://fhir.uk-erlangen.de/NamingSystem/identifier/ResearchStudyId",
+            "value": "ydbvqxoblkjg"
+          }
+        ],
+        "extension": [
+          {
+            "url": "https://fhir.miracum.org/uc1/StructureDefinition/StudyAcronym",
+            "valueString": "GAST-05"
+          }
+        ],
+        "title": "Prospektiv randomisierte, multizentrische Phase II-Studie: Therapie des lokal fortgeschrittenen Rektumkarzinoms (UICC II und III) im oberen Rektumdrittel (12-16 cm ab Anokutanlinie) mittels qualitätsgesicherter totaler (TME) versus partieller mesorektaler Exzision (PME) gefolgt von adjuvanter Chemotherapie (5-FU + Folinsäure + Oxaliplatin)",
+        "status": "temporarily-closed-to-accrual",
+        "condition": [
+          {
+            "coding": [
+              {
+                "system": "http://fhir.de/CodeSystem/dimdi/icd-10-gm",
+                "code": "C20"
+              }
+            ],
+            "text": "Bösartige Neubildung des Rektums"
+          }
+        ],
+        "contact": [
+          {
+            "name": "Studienzentrale Chirurgie",
+            "telecom": [
+              {
+                "system": "email",
+                "value": "chir@example.de",
+                "use": "work"
+              },
+              {
+                "system": "phone",
+                "value": "00000/00-00000",
+                "use": "work"
+              }
+            ]
+          }
+        ],
+        "keyword": [
+          {
+            "coding": [
+              {
+                "system": "http://studien.uk-erlangen.de/fhir/CodeSystem/study-category",
+                "code": "entgastro"
+              }
+            ],
+            "text": "Krebs des Verdauungstraktes (z.B. Magenkrebs, Darmkrebs)"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://studien.uk-erlangen.de/fhir/CodeSystem/study-category",
+                "code": "gikolorektal"
+              }
+            ],
+            "text": "Tumor des Dickdarms / Mastdarms (Kolorektales Karzinom)"
+          }
+        ],
+        "enrollment": [
+          {
+            "reference": "#1"
+          }
+        ],
+        "site": [
+          {
+            "reference": "Location/1"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "ResearchStudy?identifier=https%3A%2F%2Ffhir.uk-erlangen.de%2FNamingSystem%2Fidentifier%2FResearchStudyId|ydbvqxoblkjg"
+      }
+    },
+    {
+      "fullUrl": "6",
+      "resource": {
+        "resourceType": "ResearchStudy",
+        "language": "de-DE",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://fhir.miracum.org/uc1/CodeSystem/registryStudyRole",
+              "code": "master"
+            }
+          ]
+        },
+        "contained": [
+          {
+            "resourceType": "Group",
+            "id": "1",
+            "type": "person",
+            "actual": false,
+            "characteristic": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+                      "code": "age"
+                    }
+                  ],
+                  "text": "Age Range"
+                },
+                "valueRange": {
+                  "low": {
+                    "value": 18,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "a"
+                  }
+                },
+                "exclude": false
+              }
+            ]
+          }
+        ],
+        "identifier": [
+          {
+            "use": "secondary",
+            "system": "https://fhir.uk-erlangen.de/NamingSystem/identifier/ResearchStudyId",
+            "value": "nzpxlpnwlarg"
+          }
+        ],
+        "extension": [
+          {
+            "url": "https://fhir.miracum.org/uc1/StructureDefinition/StudyAcronym",
+            "valueString": "SYNCHRONOUS"
+          }
+        ],
+        "title": "Resection of the primary tumor versus no resection prior to systemic therapy in patients with colon cancer and synchronous unresectable metastases (UICC stage IV) - A randomized controlled multicenter trial (SYNCHRONOUS-Trial)",
+        "status": "active",
+        "condition": [
+          {
+            "coding": [
+              {
+                "system": "http://fhir.de/CodeSystem/dimdi/icd-10-gm",
+                "code": "C18"
+              }
+            ],
+            "text": "Bösartige Neubildung des Kolons"
+          }
+        ],
+        "keyword": [
+          {
+            "coding": [
+              {
+                "system": "http://studien.uk-erlangen.de/fhir/CodeSystem/study-category",
+                "code": "entgastro"
+              }
+            ],
+            "text": "Krebs des Verdauungstraktes (z.B. Magenkrebs, Darmkrebs)"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://studien.uk-erlangen.de/fhir/CodeSystem/study-category",
+                "code": "gikolorektal"
+              }
+            ],
+            "text": "Tumor des Dickdarms / Mastdarms (Kolorektales Karzinom)"
+          }
+        ],
+        "enrollment": [
+          {
+            "reference": "#1"
+          }
+        ],
+        "site": [
+          {
+            "reference": "Location/1",
+            "extension": [
+              {
+                "url": "http://miracum.org/fhir/StructureDefinition/RecruitmentStatus",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "system": "http://hl7.org/fhir/research-study-status",
+                      "code": "active"
+                    }
+                  ]
+                }
+              },
+              {
+                "url": "http://miracum.org/fhir/StructureDefinition/ContactExtension",
+                "valueContactDetail": {
+                  "name": "Studienzentrale Chirurgie",
+                  "telecom": [
+                    {
+                      "system": "email",
+                      "value": "erlangen@example.de",
+                      "use": "work"
+                    },
+                    {
+                      "system": "phone",
+                      "value": "00000/33-333333",
+                      "use": "work"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "reference": "Location/3",
+            "extension": [
+              {
+                "url": "http://miracum.org/fhir/StructureDefinition/RecruitmentStatus",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "system": "http://hl7.org/fhir/research-study-status",
+                      "code": "active"
+                    }
+                  ]
+                }
+              },
+              {
+                "url": "http://miracum.org/fhir/StructureDefinition/ContactExtension",
+                "valueContactDetail": {
+                  "name": "Abteilung Chirurgische Forschung",
+                  "telecom": [
+                    {
+                      "system": "email",
+                      "value": "greifswald@example.de",
+                      "use": "work"
+                    },
+                    {
+                      "system": "phone",
+                      "value": "+49(0)222 222 222",
+                      "use": "work"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "ResearchStudy?identifier=https%3A%2F%2Ffhir.uk-erlangen.de%2FNamingSystem%2Fidentifier%2FResearchStudyId|nzpxlpnwlarg"
+      }
+    },
+    {
+      "fullUrl": "7",
+      "resource": {
+        "resourceType": "ResearchStudy",
+        "language": "de-DE",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://fhir.miracum.org/uc1/CodeSystem/registryStudyRole",
+              "code": "master"
+            }
+          ]
+        },
+        "contained": [
+          {
+            "resourceType": "Group",
+            "id": "1",
+            "type": "person",
+            "actual": false
+          }
+        ],
+        "identifier": [
+          {
+            "use": "secondary",
+            "system": "https://fhir.uk-erlangen.de/NamingSystem/identifier/ResearchStudyId",
+            "value": "pzeoqbxzqxyr"
+          },
+          {
+            "use": "official",
+            "system": "http://clinicaltrials.gov",
+            "value": "NCT02938481"
+          }
+        ],
+        "extension": [
+          {
+            "url": "https://fhir.miracum.org/uc1/StructureDefinition/StudyAcronym",
+            "valueString": "T-REX"
+          }
+        ],
+        "title": "Internationale prospektive beobachtende Kohortenstudie bezüglich optimalem Resektionsausmaß und zentraler Radikalität beim Kolonkarziom",
+        "_title": {
+          "extension": [
+            {
+              "extension": [
+                {
+                  "url": "lang",
+                  "valueString": "en"
+                },
+                {
+                  "url": "content",
+                  "valueString": "International Prospective Observational Cohort Study for Optimal Bowel Resection Extent an Central Radicality for Colon Cancer"
+                }
+              ],
+              "url": "http://hl7.org/fhir/StructureDefinition/translation"
+            }
+          ]
+        },
+        "status": "closed-to-accrual",
+        "condition": [
+          {
+            "coding": [
+              {
+                "system": "http://fhir.de/CodeSystem/dimdi/icd-10-gm",
+                "code": "C20"
+              }
+            ],
+            "text": "Bösartige Neubildung des Rektums"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://fhir.de/CodeSystem/dimdi/icd-10-gm",
+                "code": "C18"
+              }
+            ],
+            "text": "Bösartige Neubildung des Kolons"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://fhir.de/CodeSystem/dimdi/icd-10-gm",
+                "code": "C19"
+              }
+            ],
+            "text": "Bösartige Neubildung am Rektosigmoid, Übergang"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://fhir.de/CodeSystem/dimdi/icd-10-gm",
+                "code": "C21"
+              }
+            ],
+            "text": "Bösartige Neubildung des Anus und des Analkanals"
+          }
+        ],
+        "contact": [
+          {
+            "name": "Studienzentrale Chirurgie",
+            "telecom": [
+              {
+                "system": "email",
+                "value": "chir@example.de",
+                "use": "work"
+              },
+              {
+                "system": "phone",
+                "value": "00000/11-111111",
+                "use": "work"
+              }
+            ]
+          }
+        ],
+        "relatedArtifact": [
+          {
+            "type": "documentation",
+            "display": "clinicaltrials.gov (NCT)",
+            "url": "https://clinicaltrials.gov/ct2/show/NCT02938481"
+          }
+        ],
+        "keyword": [
+          {
+            "coding": [
+              {
+                "system": "http://studien.uk-erlangen.de/fhir/CodeSystem/study-category",
+                "code": "entgastro"
+              }
+            ],
+            "text": "Krebs des Verdauungstraktes (z.B. Magenkrebs, Darmkrebs)"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://studien.uk-erlangen.de/fhir/CodeSystem/study-category",
+                "code": "gikolorektal"
+              }
+            ],
+            "text": "Tumor des Dickdarms / Mastdarms (Kolorektales Karzinom)"
+          }
+        ],
+        "description": "Durch Ermittlung der genauen Entfernung von Lymphknoten-metastasen im Verhältnis zum Tumor sollen Rückschlüsse darüber gezogen werden, wie weit die Resektionsgrenzen vom Primärtumor entfernt gesetzt werden müssen, um alle regionären Lymphknotenmetastasen zu erfassen und ein optimales Langzeitergebnis zu erreichen. Dabei macht sich diese Studie die Situation zu Nutze, dass die operativen Richtlinien zur Therapie des Kolonkarzinoms in Europa und Asien unterschiedlich sind, so dass durch die Zusammenarbeit von japanischen, koreanischen, britischen und deutschen Chirurgen gleichzeitig ein Vergleich zweier unterschiedlicher Resektionsstrategien durch eine Beobachtungsstudie erreicht werden kann.",
+        "enrollment": [
+          {
+            "reference": "#1"
+          }
+        ],
+        "site": [
+          {
+            "reference": "Location/1"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "ResearchStudy?identifier=https%3A%2F%2Ffhir.uk-erlangen.de%2FNamingSystem%2Fidentifier%2FResearchStudyId|pzeoqbxzqxyr"
+      }
+    },
+    {
+      "fullUrl": "8",
+      "resource": {
+        "resourceType": "ResearchStudy",
+        "language": "de-DE",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://fhir.miracum.org/uc1/CodeSystem/registryStudyRole",
+              "code": "master"
+            }
+          ]
+        },
+        "contained": [
+          {
+            "resourceType": "Group",
+            "id": "1",
+            "type": "person",
+            "actual": false,
+            "characteristic": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+                      "code": "age"
+                    }
+                  ],
+                  "text": "Age Range"
+                },
+                "valueRange": {
+                  "low": {
+                    "value": 18,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "a"
+                  }
+                },
+                "exclude": false
+              }
+            ]
+          }
+        ],
+        "identifier": [
+          {
+            "use": "secondary",
+            "system": "https://fhir.uk-erlangen.de/NamingSystem/identifier/ResearchStudyId",
+            "value": "nerxqknalypm"
+          }
+        ],
+        "extension": [
+          {
+            "url": "https://fhir.miracum.org/uc1/StructureDefinition/StudyAcronym",
+            "valueString": "LOGIST"
+          }
+        ],
+        "title": "Nicht-interventionelle Registerstudie zur Beobachtung von Patienten mit gastrointestinalen Stromatumoren (GIST) nach einer R0/R1 Resektion mit oder ohne adjuvante Imatinib-Therapie - 'A Local Observational GIST registry' - LOGIST",
+        "status": "active",
+        "condition": [
+          {
+            "coding": [
+              {
+                "system": "http://fhir.de/CodeSystem/dimdi/icd-10-gm",
+                "code": "C16"
+              }
+            ],
+            "text": "Bösartige Neubildung des Magens"
+          }
+        ],
+        "contact": [
+          {
+            "name": "Studienzentrale Chirurgie",
+            "telecom": [
+              {
+                "system": "email",
+                "value": "chir@example.de",
+                "use": "work"
+              },
+              {
+                "system": "phone",
+                "value": "00000/11-1111111",
+                "use": "work"
+              }
+            ]
+          }
+        ],
+        "keyword": [
+          {
+            "coding": [
+              {
+                "system": "http://studien.uk-erlangen.de/fhir/CodeSystem/study-category",
+                "code": "entgastro"
+              }
+            ],
+            "text": "Krebs des Verdauungstraktes (z.B. Magenkrebs, Darmkrebs)"
+          },
+          {
+            "coding": [
+              {
+                "system": "http://studien.uk-erlangen.de/fhir/CodeSystem/study-category",
+                "code": "gistroma"
+              }
+            ],
+            "text": "Bindegewebs-Tumor des Magendarmtraktes (Gastrointestinaler Stromatumor)"
+          }
+        ],
+        "enrollment": [
+          {
+            "reference": "#1"
+          }
+        ],
+        "site": [
+          {
+            "reference": "Location/1"
+          },
+          {
+            "reference": "Location/2"
+          },
+          {
+            "reference": "Location/3",
+            "extension": [
+              {
+                "url": "http://miracum.org/fhir/StructureDefinition/RecruitmentStatus",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "system": "http://hl7.org/fhir/research-study-status",
+                      "code": "active"
+                    }
+                  ]
+                }
+              },
+              {
+                "url": "http://miracum.org/fhir/StructureDefinition/ContactExtension",
+                "valueContactDetail": {
+                  "name": "Forschung",
+                  "telecom": [
+                    {
+                      "system": "email",
+                      "value": "greifswald@example.de",
+                      "use": "work"
+                    },
+                    {
+                      "system": "phone",
+                      "value": "+49(0)222 222 222",
+                      "use": "work"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "ResearchStudy?identifier=https%3A%2F%2Ffhir.uk-erlangen.de%2FNamingSystem%2Fidentifier%2FResearchStudyId|nerxqknalypm"
+      }
+    },
+    {
+      "fullUrl": "9",
+      "resource": {
+        "resourceType": "ResearchStudy",
+        "language": "de-DE",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://fhir.miracum.org/uc1/CodeSystem/registryStudyRole",
+              "code": "master"
+            }
+          ]
+        },
+        "contained": [
+          {
+            "resourceType": "Group",
+            "id": "1",
+            "type": "person",
+            "actual": false,
+            "characteristic": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+                      "code": "age"
+                    }
+                  ],
+                  "text": "Age Range"
+                },
+                "valueRange": {
+                  "low": {
+                    "value": 18,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "a"
+                  }
+                },
+                "exclude": false
+              }
+            ]
+          }
+        ],
+        "identifier": [
+          {
+            "use": "secondary",
+            "system": "https://fhir.uk-erlangen.de/NamingSystem/identifier/ResearchStudyId",
+            "value": "123"
+          }
+        ],
+        "title": "Studie ohne Akronym: Krankheitslast und Versorgungssituation bei Sarkomen: Eine nationale Studie zu Einflussfaktoren patientenberichteter Krankheitsfolgen bei Menschen mit Sarkomerkrankungen.",
+        "status": "active",
+        "condition": [
+          {
+            "coding": [
+              {
+                "system": "http://fhir.de/CodeSystem/dimdi/icd-10-gm",
+                "code": "C16",
+                "display": "Bösartige Neubildung des Magens"
+              }
+            ]
+          }
+        ],
+        "contact": [
+          {
+            "name": "Studienzentrale Chirurgie",
+            "telecom": [
+              {
+                "system": "email",
+                "value": "chir@example.de",
+                "use": "work"
+              },
+              {
+                "system": "phone",
+                "value": "00000/11-1111111",
+                "use": "work"
+              }
+            ]
+          }
+        ],
+        "keyword": [
+          {
+            "coding": [
+              {
+                "system": "http://studien.uk-erlangen.de/fhir/CodeSystem/study-category",
+                "code": "entgastro"
+              }
+            ]
+          },
+          {
+            "coding": [
+              {
+                "system": "http://studien.uk-erlangen.de/fhir/CodeSystem/study-category",
+                "code": "gistroma"
+              }
+            ],
+            "text": "Bindegewebs-Tumor des Magendarmtraktes (Gastrointestinaler Stromatumor)"
+          }
+        ],
+        "enrollment": [
+          {
+            "reference": "#1"
+          }
+        ],
+        "site": [
+          {
+            "reference": "Location/1"
+          },
+          {
+            "reference": "Location/2"
+          },
+          {
+            "reference": "Location/3",
+            "extension": [
+              {
+                "url": "http://miracum.org/fhir/StructureDefinition/RecruitmentStatus",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "system": "http://hl7.org/fhir/research-study-status",
+                      "code": "active"
+                    }
+                  ]
+                }
+              },
+              {
+                "url": "http://miracum.org/fhir/StructureDefinition/ContactExtension",
+                "valueContactDetail": {
+                  "name": "Forschung",
+                  "telecom": [
+                    {
+                      "system": "email",
+                      "value": "greifswald@example.de",
+                      "use": "work"
+                    },
+                    {
+                      "system": "phone",
+                      "value": "+49(0)222 222 222",
+                      "use": "work"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "ResearchStudy?identifier=https%3A%2F%2Ffhir.uk-erlangen.de%2FNamingSystem%2Fidentifier%2FResearchStudyId|123"
+      }
+    },
+    {
+      "fullUrl": "10",
+      "resource": {
+        "resourceType": "ResearchStudy",
+        "language": "de-DE",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://fhir.miracum.org/uc1/CodeSystem/registryStudyRole",
+              "code": "master"
+            }
+          ]
+        },
+        "contained": [
+          {
+            "resourceType": "Group",
+            "id": "1",
+            "type": "person",
+            "actual": false,
+            "characteristic": [
+              {
+                "code": {
+                  "text": "gender"
+                },
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "system": "http://hl7.org/fhir/administrative-gender",
+                      "code": "other"
+                    }
+                  ]
+                },
+                "exclude": false
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+                      "code": "age"
+                    }
+                  ],
+                  "text": "Age Range"
+                },
+                "valueRange": {
+                  "low": {
+                    "value": 18,
+                    "system": "http://unitsofmeasure.org",
+                    "code": "a"
+                  }
+                },
+                "exclude": false
+              }
+            ]
+          }
+        ],
+        "extension": [
+          {
+            "url": "https://fhir.miracum.org/uc1/StructureDefinition/StudyAcronym",
+            "valueString": "ESOPEC"
+          }
+        ],
+        "identifier": [
+          {
+            "use": "secondary",
+            "system": "https://mirsoda.med.uni-giessen.de",
+            "value": "P000018"
+          },
+          {
+            "use": "official",
+            "system": "https://www.drks.de/",
+            "value": "DRKS00008008"
+          },
+          {
+            "use": "official",
+            "system": "https://clinicaltrials.gov/",
+            "value": "NCT02509286"
+          }
+        ],
+        "_title": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/translation",
+              "extension": [
+                {
+                  "url": "lang",
+                  "valueString": "en"
+                },
+                {
+                  "url": "content",
+                  "valueString": "Perioperative Chemotherapy (FLOT Protocol) Compared To Neoadjuvant Chemoradiation (CROSS Protocol) in Patients With Adenocarcinoma of the Esophagus"
+                }
+              ]
+            }
+          ]
+        },
+        "status": "active",
+        "contact": [
+          {
+            "name": "MR TEST"
+          }
+        ],
+        "relatedArtifact": [
+          {
+            "type": "documentation",
+            "display": "DRKS",
+            "url": "https://www.drks.de/drks_web/navigate.do?navigationId=trial.HTML&TRIAL_ID=DRKS00008008"
+          },
+          {
+            "type": "documentation",
+            "display": "clinicaltrials.gov",
+            "url": "https://clinicaltrials.gov/ct2/show/NCT02509286"
+          }
+        ],
+        "_description": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/translation",
+              "extension": [
+                {
+                  "url": "lang",
+                  "valueString": "en"
+                },
+                {
+                  "url": "content",
+                  "valueString": " The trial is designed to investigate differences in outcome of patients with esophageal adenocarcinoma and junctional adenocarcinoma treated with perioperative (neoadjuvant + adjuvant) chemotherapy (FLOT) plus surgical resection versus neoadjuvant chemoradiation (CROSS) plus surgical resection.     "
+                }
+              ]
+            }
+          ]
+        },
+        "enrollment": [
+          {
+            "reference": "#1"
+          }
+        ],
+        "site": [
+          {
+            "reference": "Location/1",
+            "display": "Universitaetsklinik Erlangen"
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "ResearchStudy?identifier=https%3A%2F%2Fmirsoda.med.uni-giessen.de|P000018"
+      }
+    }
+  ]
+}

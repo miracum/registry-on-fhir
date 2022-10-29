@@ -1,0 +1,7 @@
+.kpt-pipeline/
+
+megalinter-reports/
+
+node_modules/
+
+.pytest_cache/

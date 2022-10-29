@@ -1,0 +1,163 @@
+name: build
+
+on:
+  push:
+    branches: [master]
+  release:
+    types: [created]
+  pull_request:
+    branches: [master]
+
+# Declare default permissions as read only.
+permissions: read-all
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-22.04
+    permissions:
+      packages: write
+      contents: read
+      # pull-requests: write
+    strategy:
+      matrix:
+        component:
+          - web
+          - multi-site-merger
+    outputs:
+      image-tags: ${{ steps.container_meta.outputs.tags }}
+      image-version: ${{ steps.container_meta.outputs.version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
+        with:
+          fetch-depth: 0
+
+      - name: Container meta for image
+        id: container_meta
+        uses: docker/metadata-action@69f6fc9d46f2f8bf0d5491e4aabe0bb8c6a4678a # tag=v4
+        with:
+          images: |
+            ghcr.io/${{ github.repository }}/${{ matrix.component }}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@8b122486cedac8393e77aa9734c3528886e4a1a8 # tag=v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@dc7b9719a96d48369863986a06765841d7ea23f6 # tag=v2
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # tag=v2
+        if: ${{ github.event_name != 'pull_request' }}
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # can't use `load` and `push` at the same time, so differentiate by whether its a PR or not
+      - name: Build and push image
+        uses: docker/build-push-action@c84f38281176d4c9cdb1626ffafcd6b3911b5d94 # tag=v3
+        with:
+          load: ${{ github.event_name == 'pull_request' }}
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.container_meta.outputs.tags }}
+          labels: ${{ steps.container_meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          context: ${{ matrix.component }}
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe # tag=v0.7.1
+        with:
+          image-ref: ${{ fromJson(steps.container_meta.outputs.json).tags[0] }}
+          severity: "CRITICAL,HIGH"
+          exit-code: "1"
+          ignore-unfixed: "true"
+
+      - name: Save container image as tar archives
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          IMAGE: ${{ fromJson(steps.container_meta.outputs.json).tags[0] }}
+        run: |
+          docker save "$IMAGE" -o /tmp/${{ matrix.component }}-image.tar
+
+      - name: Upload container image
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # tag=v3.1.0
+        with:
+          name: ${{ matrix.component }}-image-artifacts
+          path: |
+            /tmp/${{ matrix.component }}-image.tar
+
+  test:
+    name: test
+    runs-on: ubuntu-22.04
+    needs:
+      - build
+    permissions:
+      packages: write
+      contents: read
+      # pull-requests: write
+    strategy:
+      matrix:
+        component:
+          - web
+          - multi-site-merger
+    steps:
+      - name: Checkout
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
+        with:
+          fetch-depth: 0
+
+      - name: Download image
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741 # tag=v3.0.0
+        with:
+          name: ${{ matrix.component }}-image-artifacts
+          path: /tmp
+
+      - name: Load image
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          ls -lar /tmp
+          docker load --input /tmp/${{ matrix.component }}-image.tar
+          docker image ls -a
+
+      # TODO:
+      # - name: Start compose deployment
+      #   working-directory: ./${{ matrix.component }}/
+      #   env:
+      #     IMAGE_TAG: ${{ needs.build.outputs.image-version }}
+      #   run: |
+      #     echo "Using image tag ${IMAGE_TAG}"
+
+      #     # workaround for <https://stackoverflow.com/questions/68100390/error-cannot-find-module-vue-cli-plugin-babel-preset>
+      #     # since the node_modules folder is missing inside the cypress container.
+      #     rm -f babel.config.js
+
+      #     docker compose -f tests/e2e/docker-compose.yaml run tester
+
+      # - name: Print compose logs
+      #   if: always()
+      #   run: |
+      #     docker compose -f tests/e2e/docker-compose.yaml logs
+      #     docker compose -f tests/e2e/docker-compose.yaml down --volumes --remove-orphans
+
+  # release:
+  #   name: semantic-elease
+  #   needs: build
+  #   runs-on: ubuntu-22.04
+  #   if: ${{ github.event_name != 'pull_request' }}
+  #   permissions:
+  #     contents: write
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
+
+  #     - name: Semantic Release
+  #       uses: cycjimmy/semantic-release-action@3b88c82b34098e8b51e401c1082c9170b0a3ec3c # tag=v3
+  #       with:
+  #         extra_plugins: |
+  #           conventional-changelog-conventionalcommits@5.0.0
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_TOKEN }}

@@ -1,0 +1,33 @@
+spring:
+  main:
+    banner-mode: false
+  profiles:
+    active: "dev"
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  health:
+    probes:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+fhir:
+  systems:
+    studyRoleTag: "https://fhir.miracum.org/uc1/CodeSystem/registryStudyRole"
+    multiSiteStatusExtension: "https://fhir.miracum.org/uc1/StructureDefinition/siteRecruitmentStatus"
+    multiSiteContactExtension: "https://fhir.miracum.org/uc1/StructureDefinition/siteContact"
+    studyAcronymExtension: "https://fhir.miracum.org/uc1/StructureDefinition/studyAcronym"
+  url: nil
+  subscription:
+    enabled: false
+
+webhook:
+  endpoint: nil
+
+merge:
+  schedule: "0 0 * * * */1"

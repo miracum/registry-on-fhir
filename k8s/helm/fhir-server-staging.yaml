@@ -1,0 +1,41 @@
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/auth-type: basic
+    nginx.ingress.kubernetes.io/auth-secret: fhir-server-basic-auth
+    nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - MIRACUM Studienregister API Staging"
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+  hosts:
+    - host: query.recruit.miracum.org
+      paths:
+        - "/"
+  tls:
+    - secretName: query-recruit-miracum-org-tls
+      hosts:
+        - query.recruit.miracum.org
+
+postgresql:
+  enabled: true
+  postgresqlUsername: fhir
+  postgresqlDatabase: fhir
+  postgresqlPassword: fhir
+  persistence:
+    size: 64Gi
+
+extraEnv:
+  - name: HAPI_FHIR_VALIDATION_REQUESTS_ENABLED
+    value: "false"
+
+deploymentAnnotations:
+  app.gitlab.com/app: miracum-uc1-registry-registry-on-fhir
+  app.gitlab.com/env: staging
+
+podAnnotations:
+  app.gitlab.com/app: miracum-uc1-registry-registry-on-fhir
+  app.gitlab.com/env: staging
+
+resources:
+  limits:
+    memory: 2Gi
