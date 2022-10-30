@@ -1,0 +1,31 @@
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/auth-type: basic
+    nginx.ingress.kubernetes.io/auth-secret: fhir-server-basic-auth
+    nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - MIRACUM Studienregister API"
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+  hosts:
+    - host: api.studien.miracum.org
+      paths:
+        - "/"
+  tls:
+    - secretName: api-studien-miracum-org-tls
+      hosts:
+        - api.studien.miracum.org
+
+postgresql:
+  enabled: true
+  postgresqlUsername: fhir
+  postgresqlDatabase: fhir
+  # doesn't really matter: the database itself isn't externally exposed,
+  # and doesn't contain critical data
+  postgresqlPassword: fhir
+  persistence:
+    size: 64Gi
+
+extraEnv:
+  - name: HAPI_FHIR_VALIDATION_REQUESTS_ENABLED
+    value: "false"
