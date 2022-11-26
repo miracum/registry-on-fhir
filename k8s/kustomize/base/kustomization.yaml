@@ -8,3 +8,11 @@ resources:
   - web-service.yaml
   - merger-deployment.yaml
   - merger-service.yaml
+helmCharts:
+  - name: hapi-fhir-jpaserver
+    repo: https://hapifhir.github.io/hapi-fhir-jpaserver-starter
+    version: 0.11.0
+    valuesInline:
+      postgresql:
+        auth:
+          postgresPassword: hapi-fhir-postgres-admin-pass

@@ -193,3 +193,44 @@ jobs:
         run: |
           docker compose -f tests/e2e/docker-compose.yaml logs
           docker compose -f tests/e2e/docker-compose.yaml down --volumes --remove-orphans
+
+  sign-images:
+    name: sign images
+    runs-on: ubuntu-22.04
+    if: ${{ github.event_name != 'pull_request' }}
+    needs:
+      - build
+      - test-web
+      - test-multisite-merger
+    permissions:
+      contents: read
+      id-token: write
+      packages: write
+    steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # tag=v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Container meta for images
+        id: container_meta
+        uses: docker/metadata-action@69f6fc9d46f2f8bf0d5491e4aabe0bb8c6a4678a # tag=v4
+        with:
+          images: |
+            ghcr.io/${{ github.repository }}/web
+            ghcr.io/${{ github.repository }}/multi-site-merger
+
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@9becc617647dfa20ae7b1151972e9b3a2c338a2b # tag=v2.8.1
+
+      - name: Sign images
+        env:
+          COSIGN_EXPERIMENTAL: "true"
+          IMAGES: ${{ steps.container_meta.outputs.version }}
+        run: |
+          while read -r image; do
+            echo "Signing '$image' using keyless approach"
+            cosign sign "$image"
+          done <<< "$IMAGES"
