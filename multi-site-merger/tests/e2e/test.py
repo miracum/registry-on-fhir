@@ -17,7 +17,7 @@ MERGER_UPDATE_URL = os.environ.get(
 
 
 @pytest.fixture(scope="session", autouse=True)
-def wait_for_server_to_be_up_and_trigger_merge(smart):
+def wait_for_server_to_be_up_and_trigger_merge():
     s = requests.Session()
     retries = Retry(total=15, backoff_factor=5, status_forcelist=[502, 503, 504])
     s.mount("http://", HTTPAdapter(max_retries=retries))

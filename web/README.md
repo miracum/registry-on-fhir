@@ -7,7 +7,7 @@ The frontend and proxy server components of the FHIR-based trials registry.
 Start a FHIR server filled with sample data:
 
 ```sh
-docker compose -f hack/docker-compose.dev.yaml up
+docker compose -f docker-compose.dev.yaml up
 ```
 
 Install packages

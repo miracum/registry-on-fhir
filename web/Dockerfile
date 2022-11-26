@@ -11,13 +11,11 @@ RUN npm clean-install --workspace=frontend
 
 COPY frontend/ ./frontend/
 
-ARG VERSION=0.0.0
+ARG VERSION=0.0.0 # x-release-please-version
 ENV VUE_APP_VERSION=${VERSION} \
     NODE_ENV=production
-RUN npm run build --workspace=frontend
-
-FROM build-frontend AS test
-RUN npm run test:unit --workspace=frontend
+RUN npm run build --workspace=frontend && \
+    npm run test:unit --workspace=frontend
 
 FROM base AS build-server
 COPY server/package.json ./server/package.json

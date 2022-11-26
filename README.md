@@ -1,5 +1,7 @@
 # Registry on FHIR
 
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/miracum/registry-on-fhir/badge)](https://api.securityscorecards.dev/projects/github.com/miracum/registry-on-fhir)
+
 A clinical trial registry based on FHIR.
 
 ## Components

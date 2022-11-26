@@ -17,8 +17,6 @@ jobs:
     runs-on: ubuntu-22.04
     permissions:
       packages: write
-      contents: read
-      # pull-requests: write
     strategy:
       matrix:
         component:
@@ -89,75 +87,109 @@ jobs:
           path: |
             /tmp/${{ matrix.component }}-image.tar
 
-  test:
-    name: test
+  test-multisite-merger:
+    name: test multi site merger
     runs-on: ubuntu-22.04
     needs:
       - build
-    permissions:
-      packages: write
-      contents: read
-      # pull-requests: write
-    strategy:
-      matrix:
-        component:
-          - web
-          - multi-site-merger
+    env:
+      COMPONENT_NAME: multi-site-merger
     steps:
       - name: Checkout
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
         with:
           fetch-depth: 0
 
+      - name: Container meta for image
+        id: container_meta
+        uses: docker/metadata-action@69f6fc9d46f2f8bf0d5491e4aabe0bb8c6a4678a # tag=v4
+        with:
+          images: |
+            ghcr.io/${{ github.repository }}/${{ env.COMPONENT_NAME }}
+
       - name: Download image
         if: ${{ github.event_name == 'pull_request' }}
         uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741 # tag=v3.0.0
         with:
-          name: ${{ matrix.component }}-image-artifacts
+          name: ${{ env.COMPONENT_NAME }}-image-artifacts
           path: /tmp
 
       - name: Load image
         if: ${{ github.event_name == 'pull_request' }}
         run: |
           ls -lar /tmp
-          docker load --input /tmp/${{ matrix.component }}-image.tar
+          docker load --input /tmp/${{ env.COMPONENT_NAME }}-image.tar
           docker image ls -a
 
-      # TODO:
-      # - name: Start compose deployment
-      #   working-directory: ./${{ matrix.component }}/
-      #   env:
-      #     IMAGE_TAG: ${{ needs.build.outputs.image-version }}
-      #   run: |
-      #     echo "Using image tag ${IMAGE_TAG}"
+      - name: Start compose deployment
+        working-directory: ${{ env.COMPONENT_NAME }}
+        env:
+          IMAGE_TAG: ${{ steps.container_meta.outputs.version }}
+        run: |
+          echo "Using image tag ${IMAGE_TAG}"
 
-      #     # workaround for <https://stackoverflow.com/questions/68100390/error-cannot-find-module-vue-cli-plugin-babel-preset>
-      #     # since the node_modules folder is missing inside the cypress container.
-      #     rm -f babel.config.js
+          docker compose -f tests/e2e/docker-compose.yaml build
 
-      #     docker compose -f tests/e2e/docker-compose.yaml run tester
+          docker compose -f tests/e2e/docker-compose.yaml run loader
+          docker compose -f tests/e2e/docker-compose.yaml run tester
 
-      # - name: Print compose logs
-      #   if: always()
-      #   run: |
-      #     docker compose -f tests/e2e/docker-compose.yaml logs
-      #     docker compose -f tests/e2e/docker-compose.yaml down --volumes --remove-orphans
+      - name: Print compose logs
+        working-directory: ${{ env.COMPONENT_NAME }}
+        if: always()
+        run: |
+          docker compose -f tests/e2e/docker-compose.yaml logs
+          docker compose -f tests/e2e/docker-compose.yaml down --volumes --remove-orphans
 
-  # release:
-  #   name: semantic-elease
-  #   needs: build
-  #   runs-on: ubuntu-22.04
-  #   if: ${{ github.event_name != 'pull_request' }}
-  #   permissions:
-  #     contents: write
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
+  test-web:
+    name: test web
+    runs-on: ubuntu-22.04
+    needs:
+      - build
+    env:
+      COMPONENT_NAME: web
+    if: ${{ false }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
+        with:
+          fetch-depth: 0
 
-  #     - name: Semantic Release
-  #       uses: cycjimmy/semantic-release-action@3b88c82b34098e8b51e401c1082c9170b0a3ec3c # tag=v3
-  #       with:
-  #         extra_plugins: |
-  #           conventional-changelog-conventionalcommits@5.0.0
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_TOKEN }}
+      - name: Container meta for image
+        id: container_meta
+        uses: docker/metadata-action@69f6fc9d46f2f8bf0d5491e4aabe0bb8c6a4678a # tag=v4
+        with:
+          images: |
+            ghcr.io/${{ github.repository }}/${{ env.COMPONENT_NAME }}
+
+      - name: Download image
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741 # tag=v3.0.0
+        with:
+          name: ${{ env.COMPONENT_NAME }}-image-artifacts
+          path: /tmp
+
+      - name: Load image
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          ls -lar /tmp
+          docker load --input /tmp/${{ env.COMPONENT_NAME }}-image.tar
+          docker image ls -a
+
+      - name: Start compose deployment
+        working-directory: ${{ env.COMPONENT_NAME }}/frontend
+        env:
+          IMAGE_TAG: ${{ steps.container_meta.outputs.version }}
+        run: |
+          echo "Using image tag ${IMAGE_TAG}"
+
+          docker compose -f tests/e2e/docker-compose.yaml build
+
+          docker compose -f tests/e2e/docker-compose.yaml run loader
+          docker compose -f tests/e2e/docker-compose.yaml run tester
+
+      - name: Print compose logs
+        working-directory: ${{ env.COMPONENT_NAME }}/frontend
+        if: always()
+        run: |
+          docker compose -f tests/e2e/docker-compose.yaml logs
+          docker compose -f tests/e2e/docker-compose.yaml down --volumes --remove-orphans

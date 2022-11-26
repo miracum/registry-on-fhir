@@ -24,7 +24,9 @@ export const filters = Vue.observable({
 function getResearchStudyAcronym(researchStudy) {
   // this improves sort performance but assumes there's at most one extension
   // in the ResearchStudy
-  return researchStudy.extension ? researchStudy.extension[0].valueString : researchStudy.title;
+  return researchStudy.extension
+    ? researchStudy.extension[0].valueString
+    : researchStudy.title;
 }
 
 function createFhirClient() {

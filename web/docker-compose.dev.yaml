@@ -1,27 +1,4 @@
 services:
-  web:
-    image: ghcr.io/miracum/registry-on-fhir/web:$IMAGE_TAG
-    environment:
-      - FHIR_URL=http://fhir:8080/fhir
-    depends_on:
-      - fhir
-      - loader
-
-  tester:
-    build:
-      dockerfile: cypress.Dockerfile
-      context: .
-    working_dir: /e2e
-    depends_on:
-      - web
-    environment:
-      - CYPRESS_baseUrl=http://web:8080/
-      - CYPRESS_browser=chrome
-      - CYPRESS_screenshotsFolder=/results/screenshots
-      - CYPRESS_videosFolder=/results/videos
-    volumes:
-      - ${PWD}:/e2e
-
   fhir:
     image: docker.io/hapiproject/hapi:v6.2.1@sha256:8d1b4c1c8abd613f685267a3dda494d87aba4cff449eed39902a6ece2c086f3c
     environment:
@@ -30,6 +7,8 @@ services:
       HAPI_FHIR_CORS_ALLOWCREDENTIALS: "false"
       HAPI_FHIR_CORS_ALLOWED_ORIGIN: "*"
       HAPI_FHIR_NARRATIVE_ENABLED: "false"
+    ports:
+      - 127.0.0.1:8082:8080
 
   loader:
     image: docker.io/curlimages/curl:7.86.0@sha256:cfdeba7f88bb85f6c87f2ec9135115b523a1c24943976a61fbf59c4f2eafd78e
@@ -38,4 +17,4 @@ services:
     depends_on:
       - fhir
     volumes:
-      - ${PWD}/tests/e2e/studies.fhirbundle.json:/studies.fhirbundle.json:ro
+      - ./frontend/tests/e2e/studies.fhirbundle.json:/studies.fhirbundle.json:ro

@@ -26,7 +26,6 @@ jobs:
     name: MegaLinter
     runs-on: ubuntu-22.04
     permissions:
-      contents: read
       pull-requests: write
     steps:
       # Git Checkout

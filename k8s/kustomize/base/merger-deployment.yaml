@@ -20,7 +20,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: multi-site-merger
-          image: ghcr.io/miracum/registry-on-fhir/multi-site-merger:2.1.9
+          image: ghcr.io/miracum/registry-on-fhir/multi-site-merger:2.1.9 # x-release-please-version
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -42,12 +42,20 @@ spec:
             runAsGroup: 65532
             runAsUser: 65532
             runAsNonRoot: true
+            readOnlyRootFilesystem: true
             seccompProfile:
               type: RuntimeDefault
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmp
           resources:
             requests:
-              cpu: 100m
-              memory: 512Mi
+              cpu: 500m
+              memory: 1Gi
             limits:
-              memory: 1024Mi
-              cpu: 250m
+              memory: 1Gi
+              cpu: 500m
+      volumes:
+        - name: tmp
+          emptyDir:
+            sizeLimit: 1Gi

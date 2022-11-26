@@ -134,7 +134,7 @@
               "extension": [
                 {
                   "url": "lang",
-                  "valueString": "en"
+                  "valueCode": "en"
                 },
                 {
                   "url": "content",
@@ -656,7 +656,7 @@
               "extension": [
                 {
                   "url": "lang",
-                  "valueString": "en"
+                  "valueCode": "en"
                 },
                 {
                   "url": "content",
@@ -1162,7 +1162,7 @@
               "extension": [
                 {
                   "url": "lang",
-                  "valueString": "en"
+                  "valueCode": "en"
                 },
                 {
                   "url": "content",
@@ -1197,7 +1197,7 @@
               "extension": [
                 {
                   "url": "lang",
-                  "valueString": "en"
+                  "valueCode": "en"
                 },
                 {
                   "url": "content",
