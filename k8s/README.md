@@ -10,9 +10,9 @@
 
    ```sh
    helm repo add hapifhir https://hapifhir.github.io/hapi-fhir-jpaserver-starter/
-   helm upgrade --install --create-namespace -n miracum-registry \
-      -f helm/fhir-server-staging.yaml \
-      registry-fhir-server hapifhir/hapi-fhir-jpaserver
+   helm upgrade --install \
+      -f helm/fhir-server-staging-values.yaml \
+      hapi-fhir-jpaserver hapifhir/hapi-fhir-jpaserver
    ```
 
 1. Deploy the multi-site study merger and the web app
