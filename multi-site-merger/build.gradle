@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.7.5'
+    id 'org.springframework.boot' version '2.7.6'
     id 'io.spring.dependency-management' version '1.0.12.RELEASE'
     id 'java'
     id 'jacoco'
@@ -8,7 +8,7 @@ plugins {
 }
 
 group = 'org.miracum.registry'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1' // x-release-please-version
 sourceCompatibility = '17'
 targetCompatibility = '17'
 
@@ -62,13 +62,13 @@ jacocoTestReport {
     }
 }
 
-// spotless {
-//     java {
-//         importOrder()
-//         removeUnusedImports()
-//         googleJavaFormat()
-//     }
-// }
+spotless {
+    java {
+        importOrder()
+        removeUnusedImports()
+        googleJavaFormat()
+    }
+}
 
 jar {
     enabled = false

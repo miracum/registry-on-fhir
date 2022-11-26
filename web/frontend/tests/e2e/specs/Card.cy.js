@@ -13,10 +13,7 @@ describe("Card", () => {
     });
 
     it("clicking the more info button should expand to reveal more info", () => {
-      cy.get(".study-card")
-        .first()
-        .find(".more-info-button")
-        .click();
+      cy.get(".study-card").first().find(".more-info-button").click();
 
       cy.get(".notification").should("be.visible");
     });
