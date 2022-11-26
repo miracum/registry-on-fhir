@@ -19,6 +19,20 @@ build:
       docker:
         dockerfile: Dockerfile
 manifests:
+  helm:
+    releases:
+      - name: hapi-fhir-jpaserver
+        recreatePods: false
+        skipBuildDependencies: false
+        useHelmSecrets: false
+        wait: true
+        repo: https://hapifhir.github.io/hapi-fhir-jpaserver-starter
+        remoteChart: hapi-fhir-jpaserver
+        version: 0.11.0
+        # TODO: figure out why this doesn't work despite https://github.com/GoogleContainerTools/skaffold/pull/8011
+        # skipTests: true
+        setValues:
+          postgresql.auth.postgresPassword: hapi-fhir-postgres-admin-pass
   kustomize:
     paths:
       - k8s\kustomize\base

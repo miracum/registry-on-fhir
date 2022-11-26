@@ -1,4 +1,4 @@
-FROM index.docker.io/library/node:18.12.0@sha256:cef9966b19672effeafcf1a67b8add742c3e46ca7dd5532efff60820526c2e95 AS base
+FROM docker.io/library/node:18.12.1@sha256:c47a2c61e635eb4938fcd56a1139b552300624b53e3eca06b5554a577f1842cf AS base
 WORKDIR /app
 
 COPY package-lock.json ./
@@ -22,7 +22,7 @@ COPY server/package.json ./server/package.json
 RUN npm clean-install --workspace=server
 COPY server/index.js ./server/index.js
 
-FROM gcr.io/distroless/nodejs:18@sha256:445038d9cca8af12a21095cb6060abd84aa392bad5fc6a126f86a426b8fe5093
+FROM gcr.io/distroless/nodejs:18@sha256:4d7a90fba0aba8d143f011ded99268423b7bac5ea509e62216c9318eef2a7477
 WORKDIR /app
 ENV NODE_ENV=production
 USER 65532:65532
@@ -36,13 +36,3 @@ COPY --from=build-frontend /app/frontend/dist dist
 # included for vulnerability scans
 COPY package.json ./
 COPY package-lock.json ./
-
-ARG VERSION=0.0.0
-ARG GIT_REF=""
-LABEL org.opencontainers.image.authors="miracum.org" \
-    org.opencontainers.image.source="https://github.com/miracum/registry-on-fhir" \
-    org.opencontainers.image.version=${VERSION} \
-    org.opencontainers.image.revision=${GIT_REF} \
-    org.opencontainers.image.vendor="miracum.org" \
-    org.opencontainers.image.title="registry-on-fhir-web" \
-    org.opencontainers.image.description="Web fronted for the FHIR-based trials registry."

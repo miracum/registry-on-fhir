@@ -3,3 +3,31 @@ kind: Kustomization
 resources:
   - ../../base
   - ingress.yaml
+images:
+  - name: ghcr.io/miracum/registry-on-fhir/multi-site-merger
+    newTag: master
+  - name: ghcr.io/miracum/registry-on-fhir/web
+    newTag: master
+patchesStrategicMerge:
+  - |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: multi-site-merger
+    spec:
+      template:
+        spec:
+          containers:
+            - name: multi-site-merger
+              imagePullPolicy: Always
+  - |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: web
+    spec:
+      template:
+        spec:
+          containers:
+            - name: web
+              imagePullPolicy: Always
