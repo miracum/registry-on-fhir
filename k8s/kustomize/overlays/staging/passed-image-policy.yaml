@@ -6,6 +6,8 @@ spec:
   images:
     - glob: "docker.io/bitnami/**"
     - glob: "index.docker.io/bitnami/**"
+    - glob: "docker.io/hapiproject/**"
+    - glob: "docker.io/curlimages/**"
   authorities:
     - static:
         action: pass

@@ -4,7 +4,7 @@ resources:
   - ../../base
   - ingress.yaml
   - registry-on-fhir-image-policy.yaml
-  - bitnami-image-policy.yaml
+  - passed-image-policy.yaml
 images:
   - name: ghcr.io/miracum/registry-on-fhir/multi-site-merger
     newTag: master
