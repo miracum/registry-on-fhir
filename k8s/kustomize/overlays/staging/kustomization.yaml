@@ -3,6 +3,8 @@ kind: Kustomization
 resources:
   - ../../base
   - ingress.yaml
+  - registry-on-fhir-image-policy.yaml
+  - bitnami-image-policy.yaml
 images:
   - name: ghcr.io/miracum/registry-on-fhir/multi-site-merger
     newTag: master
@@ -31,3 +33,12 @@ patchesStrategicMerge:
           containers:
             - name: web
               imagePullPolicy: Always
+helmCharts:
+  - name: hapi-fhir-jpaserver
+    repo: https://hapifhir.github.io/hapi-fhir-jpaserver-starter
+    version: 0.11.0
+    namespace: registry
+    valuesInline:
+      postgresql:
+        auth:
+          postgresPassword: hapi-fhir-postgres-admin-pass

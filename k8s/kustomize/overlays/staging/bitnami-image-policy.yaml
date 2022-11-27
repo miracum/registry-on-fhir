@@ -1,0 +1,11 @@
+apiVersion: policy.sigstore.dev/v1beta1
+kind: ClusterImagePolicy
+metadata:
+  name: bitnami-image-policy
+spec:
+  images:
+    - glob: "docker.io/bitnami/**"
+    - glob: "index.docker.io/bitnami/**"
+  authorities:
+    - static:
+        action: pass

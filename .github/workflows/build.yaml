@@ -228,7 +228,7 @@ jobs:
       - name: Sign images
         env:
           COSIGN_EXPERIMENTAL: "true"
-          IMAGES: ${{ steps.container_meta.outputs.version }}
+          IMAGES: ${{ steps.container_meta.outputs.tags }}
         run: |
           while read -r image; do
             echo "Signing '$image' using keyless approach"
