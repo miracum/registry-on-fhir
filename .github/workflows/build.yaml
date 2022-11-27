@@ -200,7 +200,7 @@ jobs:
     if: ${{ github.event_name != 'pull_request' }}
     needs:
       - build
-      - test-web
+      # - test-web
       - test-multisite-merger
     permissions:
       contents: read
