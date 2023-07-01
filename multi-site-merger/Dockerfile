@@ -1,4 +1,4 @@
-FROM docker.io/library/gradle:7.5-jdk17@sha256:c0d2168f356d52b0ed3596498b222f43d458c1a90365f34708fd89a9810b0ae2 AS build
+FROM docker.io/library/gradle:7.5-jdk17@sha256:deb7b59256192aed1f463ab5e698c509cc77ce5d4e421d8b89b5d99eb0b24538 AS build
 WORKDIR /home/gradle/src
 COPY --chown=gradle:gradle . .
 
