@@ -22,7 +22,7 @@ COPY server/package.json ./server/package.json
 RUN npm clean-install --workspace=server
 COPY server/index.js ./server/index.js
 
-FROM gcr.io/distroless/nodejs:18@sha256:4d7a90fba0aba8d143f011ded99268423b7bac5ea509e62216c9318eef2a7477
+FROM gcr.io/distroless/nodejs:18@sha256:b534f9b5528e69baa7e8caf7bcc1d93ecf59faa15d289221decf5889a2ed3877
 WORKDIR /app
 ENV NODE_ENV=production
 USER 65532:65532
