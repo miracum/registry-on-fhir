@@ -1,4 +1,4 @@
-FROM docker.io/library/node:18.12.1@sha256:c47a2c61e635eb4938fcd56a1139b552300624b53e3eca06b5554a577f1842cf AS base
+FROM docker.io/library/node:18.12.1@sha256:e9ad817b0d42b4d177a4bef8a0aff97c352468a008c3fdb2b4a82533425480df AS base
 WORKDIR /app
 
 COPY package-lock.json ./
