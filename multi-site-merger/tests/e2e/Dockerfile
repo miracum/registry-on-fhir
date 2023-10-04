@@ -1,4 +1,4 @@
-FROM docker.io/library/python:3.11-alpine@sha256:2a068b9442f61f4480306d44e3b166bfe3343761e9bd57c38f66302ebf28fd9e
+FROM docker.io/library/python:3.11-alpine@sha256:3e73c0b6c1f0205225359acac5c8ab1852e7281248d72afda3e1bb8c6f47deab
 WORKDIR /opt/tests
 # hadolint ignore=DL3018
 RUN apk --no-cache add git
