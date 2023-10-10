@@ -7,7 +7,7 @@ RUN gradle build --info && \
     awk -F"," '{ instructions += $4 + $5; covered += $5 } END { print covered, "/", instructions, " instructions covered"; print 100*covered/instructions, "% covered" }' build/jacoco/coverage.csv && \
     java -Djarmode=layertools -jar build/libs/*.jar extract
 
-FROM gcr.io/distroless/java17-debian11:nonroot@sha256:0e823486cb2cf10a3528385e1f648ac6c3100806ed437eea62ebf2958edd98e4
+FROM gcr.io/distroless/java17-debian11:nonroot@sha256:dc6e301e2731abe1670877491f0548616c29ff56a3dbef8fcda68113684bd19a
 WORKDIR /opt/multi-site-merger
 USER 65532:65532
 EXPOSE 8080/tcp
